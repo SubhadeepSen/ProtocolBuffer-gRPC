@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+// generate java classes (stubs) under given package
+option java_package = "com.employee";
+
+// generate multiple java classes (stubs), otherwise a single class
+option java_multiple_files = true;
+
+
+// protocol buffer message format, please go through the official documentation
+message Address {
+  string first_line = 1;
+  string second_line = 2;
+  string city = 3;
+  string state = 4;
+  string country = 5;
+  string pin_code = 6;
+}
+
+message Employee {
+  string first_name = 1;
+  string last_name = 2;
+
+  // embedded message
+  message Date {
+    string day = 1;
+    string month = 2;
+    string year = 3;
+  }
+  Date date_of_birth = 3;
+  string employee_code = 4;
+  Date date_of_joining = 5;
+
+  // a message can refer to another message
+  Address address = 6;
+}
