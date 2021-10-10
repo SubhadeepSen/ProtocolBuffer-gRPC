@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option java_package = "com.calculator";
+option java_multiple_files = true;
+
+message CalculatorRequest {
+  int64 first_number = 1;
+  int64 second_number = 2;
+}
+
+message CalculatorResponse {
+  int64 result = 1;
+}
+
+message IntegerRequest {
+  int64 end_number = 1;
+}
+
+message IntegerStreamResponse {
+  int64 result = 1;
+}
+
+message AverageStreamRequest {
+  int64 number = 1;
+}
+
+message AverageResponse {
+  int64 result = 1;
+}
+
+message NumberStreamRequest{
+  int64 number = 1;
+}
+
+message NumberStreamResponse {
+  int64 result = 1;
+}
+
+service CalculatorService {
+  // RPC Type: Simple or Unary RPC
+  // Description: client sends a request and server returns a response
+  // Example: client sends to numbers to Add/Sub rpc method for addition/subtraction
+  rpc Add(CalculatorRequest) returns (CalculatorResponse) {}
+  rpc Sub(CalculatorRequest) returns (CalculatorResponse) {}
+
+  // RPC Type: Server Streaming RPC
+  // Description: server starts streaming data as response when client sends a request
+  // Example: client sends end number and server starts streaming numbers from 1 to given end number
+  rpc IntegerStream(IntegerRequest) returns (stream IntegerStreamResponse) {}
+
+  // RPC Type: Client Streaming RPC
+  // Description: client sends stream of data as request and server returns response
+  // Example: client streams few numbers to server to get the average of those
+  rpc Average(stream AverageStreamRequest) returns (AverageResponse) {}
+
+  // RPC Type: Bidirectional Streaming RPC
+  // Description: both client and server stream data as request and response
+  // Example: client sends stream of number and server returns the current maximum at that point
+  rpc RunningMaximum(stream NumberStreamRequest) returns (stream NumberStreamResponse) {}
+}
