@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.17'
+    }
+}
+
+plugins {
+    id "com.google.protobuf" version "0.8.17"
+    id "java"
+    id "idea"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // protocol buffer dependencies
+    implementation('com.google.protobuf:protobuf-java:3.17.0')
+    implementation('com.google.protobuf:protobuf-java-util:3.17.0')
+
+    // grpc java dependencies
+    implementation('io.grpc:grpc-netty-shaded:1.41.0')
+    implementation('io.grpc:grpc-protobuf:1.41.0')
+    implementation('io.grpc:grpc-stub:1.41.0')
+
+    // grpc java reflection dependency
+    implementation('io.grpc:grpc-services:1.41.0')
+}
+
+protobuf {
+    // Configuring protoc executable from plugin
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.17.0"
+    }
+
+    // Configuring grpc java plugin
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.41.0'
+        }
+    }
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
