@@ -1,0 +1,1 @@
+protoc --proto_path=src/ --go_out=src/ --go-grpc_out=src/ --grpc-gateway_out=src/ src/proto/calculator.proto
